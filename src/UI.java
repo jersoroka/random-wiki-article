@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 
+// represents the console user-interface
 public class UI {
     private Parser parser;
     private Scanner input;
@@ -31,6 +32,7 @@ public class UI {
         makeHttpRequest();
     }
 
+    // EFFECTS: requests a random wikipedia page
     private void makeHttpRequest() {
         try {
             HttpRequest.requestRandomPage(parser);
@@ -39,7 +41,7 @@ public class UI {
         }
     }
 
-    // EFFECTS:
+    // EFFECTS: console interface where the user decides if they want to view a given article
     public void home() throws URISyntaxException, IOException, InterruptedException {
         String command = checkArticlePrompt();
 
@@ -57,6 +59,7 @@ public class UI {
 
     }
 
+    // EFFECTS: console interface that asks the user if they want to view a given article
     private String checkArticlePrompt() {
         String command;
         System.out.println("Would you like to view the article titled " + parser.getTitle() +
@@ -67,6 +70,7 @@ public class UI {
         return command;
     }
 
+    // EFFECTS: console interface where the user is asked if they want to find another random wiki page
     private void repeatPrompt() {
         String command;
         System.out.println("Would you like to visit another random article? Enter yes or no.");
