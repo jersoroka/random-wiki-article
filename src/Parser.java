@@ -2,11 +2,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Parser {
-    private static int id;
-    private static int ns;
-    private static String title;
+    private int id;
+    private int ns;
+    private String title;
 
-    public static void parse(String responseBody) {
+    public void parse(String responseBody) {
         JSONObject jsonObject = new JSONObject(responseBody);
         JSONObject query = jsonObject.getJSONObject("query");
         JSONArray random = query.getJSONArray("random");
@@ -17,4 +17,15 @@ public class Parser {
         title = page.getString("title");
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public int getNs() {
+        return ns;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 }
