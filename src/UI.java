@@ -1,4 +1,7 @@
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Scanner;
 
 public class UI {
@@ -7,7 +10,13 @@ public class UI {
 
     public UI() {
         setUp();
-        home();
+        try {
+            home();
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+            System.out.println("There was a problem accessing the link. Let's try a different page.");
+            new UI();
+        }
     }
 
     // MODIFIES: this
@@ -27,11 +36,12 @@ public class UI {
     }
 
     // EFFECTS:
-    public void home() {
+    public void home() throws URISyntaxException, IOException {
         String command = prompt();
 
         if (command.equals("yes")) {
             System.out.println("Here's the link!");
+            Desktop.getDesktop().browse(new URI("https://stackoverflow.com/questions/748895/how-do-you-open-web-pages-in-java"));
         } else if (command.equals("no")) {
             makeHttpRequest();
             home();
