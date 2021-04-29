@@ -16,6 +16,10 @@ public class UI {
             e.printStackTrace();
             System.out.println("There was a problem accessing the link. Let's try a different page.");
             new UI();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            System.out.println("There was an exception thrown when trying to access the selected page. " +
+                    "Let's try a different page.");
         }
     }
 
@@ -36,22 +40,24 @@ public class UI {
     }
 
     // EFFECTS:
-    public void home() throws URISyntaxException, IOException {
-        String command = prompt();
+    public void home() throws URISyntaxException, IOException, InterruptedException {
+        String command = checkArticlePrompt();
 
         if (command.equals("yes")) {
-            System.out.println("Here's the link!");
-            Desktop.getDesktop().browse(new URI("https://stackoverflow.com/questions/748895/how-do-you-open-web-pages-in-java"));
+            System.out.println("Opening your web browser...");
+            HttpRequest.requestPage(parser);
+            Desktop.getDesktop().browse(new URI(parser.getUrl()));
+            repeatPrompt();
         } else if (command.equals("no")) {
             makeHttpRequest();
             home();
         } else {
-            prompt();
+            checkArticlePrompt();
         }
 
     }
 
-    private String prompt() {
+    private String checkArticlePrompt() {
         String command;
         System.out.println("Would you like to view the article titled " + parser.getTitle() +
                 "? Enter yes or no.");
@@ -59,5 +65,21 @@ public class UI {
         command = command.toLowerCase();
 
         return command;
+    }
+
+    private void repeatPrompt() {
+        String command;
+        System.out.println("Would you like to visit another random article? Enter yes or no.");
+        command = input.next();
+        command = command.toLowerCase();
+
+        if (command.equals("yes")) {
+            new UI();
+        } else if (command.equals("no")) {
+            System.out.println("Closing program...");
+            System.exit(0);
+        } else {
+            repeatPrompt();
+        }
     }
 }
