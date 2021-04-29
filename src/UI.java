@@ -29,7 +29,7 @@ public class UI {
 
     private void makeHttpRequest() {
         try {
-            HttpRequest.request(parser);
+            HttpRequest.requestRandomPage(parser);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
